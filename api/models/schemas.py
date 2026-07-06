@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class SandwichBase(BaseModel):
@@ -20,8 +20,7 @@ class SandwichUpdate(BaseModel):
 class Sandwich(SandwichBase):
     id: int
 
-    class ConfigDict:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ResourceBase(BaseModel):
@@ -41,8 +40,7 @@ class ResourceUpdate(BaseModel):
 class Resource(ResourceBase):
     id: int
 
-    class ConfigDict:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class RecipeBase(BaseModel):
@@ -63,8 +61,7 @@ class Recipe(RecipeBase):
     sandwich: Sandwich = None
     resource: Resource = None
 
-    class ConfigDict:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class OrderDetailBase(BaseModel):
@@ -86,8 +83,7 @@ class OrderDetail(OrderDetailBase):
     order_id: int
     sandwich: Sandwich = None
 
-    class ConfigDict:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class OrderBase(BaseModel):
@@ -109,5 +105,4 @@ class Order(OrderBase):
     order_date: Optional[datetime] = None
     order_details: list[OrderDetail] = None
 
-    class ConfigDict:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
