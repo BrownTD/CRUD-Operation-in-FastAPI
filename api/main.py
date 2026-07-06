@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, status
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -47,7 +47,7 @@ def update_one_order(order_id: int, order: schemas.OrderUpdate, db: Session = De
     return orders.update(db=db, order=order, order_id=order_id)
 
 
-@app.delete("/orders/{order_id}", status_code=204, tags=["Orders"])
+@app.delete("/orders/{order_id}", status_code=status.HTTP_204_NO_CONTENT, tags=["Orders"])
 def delete_one_order(order_id: int, db: Session = Depends(get_db)):
     order = orders.read_one(db, order_id=order_id)
     if order is None:
@@ -85,7 +85,11 @@ def update_one_sandwich(
     return sandwiches.update(db=db, sandwich_id=sandwich_id, sandwich=sandwich)
 
 
-@app.delete("/sandwiches/{sandwich_id}", status_code=204, tags=["Sandwiches"])
+@app.delete(
+    "/sandwiches/{sandwich_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    tags=["Sandwiches"],
+)
 def delete_one_sandwich(sandwich_id: int, db: Session = Depends(get_db)):
     sandwich = sandwiches.read_one(db, sandwich_id=sandwich_id)
     if sandwich is None:
@@ -123,7 +127,11 @@ def update_one_resource(
     return resources.update(db=db, resource_id=resource_id, resource=resource)
 
 
-@app.delete("/resources/{resource_id}", status_code=204, tags=["Resources"])
+@app.delete(
+    "/resources/{resource_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    tags=["Resources"],
+)
 def delete_one_resource(resource_id: int, db: Session = Depends(get_db)):
     resource = resources.read_one(db, resource_id=resource_id)
     if resource is None:
@@ -161,7 +169,11 @@ def update_one_recipe(
     return recipes.update(db=db, recipe_id=recipe_id, recipe=recipe)
 
 
-@app.delete("/recipes/{recipe_id}", status_code=204, tags=["Recipes"])
+@app.delete(
+    "/recipes/{recipe_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    tags=["Recipes"],
+)
 def delete_one_recipe(recipe_id: int, db: Session = Depends(get_db)):
     recipe = recipes.read_one(db, recipe_id=recipe_id)
     if recipe is None:
@@ -224,7 +236,7 @@ def update_one_order_detail(
 
 @app.delete(
     "/order-details/{order_detail_id}",
-    status_code=204,
+    status_code=status.HTTP_204_NO_CONTENT,
     tags=["Order Details"],
 )
 def delete_one_order_detail(order_detail_id: int, db: Session = Depends(get_db)):
